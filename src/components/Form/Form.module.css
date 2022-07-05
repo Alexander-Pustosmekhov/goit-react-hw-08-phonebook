@@ -1,0 +1,22 @@
+.form {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.inputName {
+  display: block;
+}
+
+.button {
+  background-color: teal;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}

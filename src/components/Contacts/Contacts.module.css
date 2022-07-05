@@ -1,0 +1,15 @@
+.contacts {
+  background-color: gainsboro;
+  padding: 10px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.message {
+  text-align: center;
+  font-size: 30px;
+  color: teal;
+}
