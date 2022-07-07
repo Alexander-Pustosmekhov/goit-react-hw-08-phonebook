@@ -1,86 +1,78 @@
-import React from 'react';
 import { nanoid } from 'nanoid';
 import Form from './Form/Form';
 import Section from './Section/Section';
 import Contacts from './Contacts/Contacts';
 import Filter from './Filter/Filter';
 import s from './App.module.css';
+import { useState, useEffect, useRef } from 'react';
 
-class App extends React.Component {
-  state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    filter: '',
-  };
+function App() {
+  const [contacts, setContacts] = useState([
+    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  ]);
+  const [filter, setFilter] = useState('');
 
-  getFilteredContacts = () => {
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    const contactsLocal = JSON.parse(localStorage.getItem('contacts'));
+    if (contactsLocal) setContacts(contactsLocal);
+  }, []);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+
+  const getFilteredContacts = () => {
     const filteredContacts = [];
-    this.state.contacts.forEach(e => {
-      if (
-        e.name.toLocaleLowerCase().includes(this.state.filter.toLowerCase())
-      ) {
+    contacts.forEach(e => {
+      if (e.name.toLowerCase().includes(filter.toLowerCase())) {
         filteredContacts.push(e);
       }
     });
     return filteredContacts;
   };
 
-  handleChange = e => {
-    this.setState({ [e.currentTarget.name]: e.currentTarget.value });
+  const handleChange = e => {
+    setFilter(e.currentTarget.value);
   };
 
-  formSubmitHandler = data => {
-    if (this.state.contacts.some(e => e.name === data.name)) {
+  const formSubmitHandler = data => {
+    if (contacts.some(e => e.name === data.name)) {
       alert(`${data.name} is already in contacts.`);
       return;
     }
     const newContact = { name: data.name, number: data.number, id: nanoid() };
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, newContact],
-    }));
+    setContacts(prev => [...prev, newContact]);
   };
 
-  removeContact = id => {
-    this.setState({
-      contacts: this.state.contacts.filter(contact => contact.id !== id),
-    });
+  const removeContact = id => {
+    setContacts(contacts.filter(contact => contact.id !== id));
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.contacts !== this.state.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
-  }
-
-  componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
-    if (parsedContacts) this.setState({ contacts: parsedContacts });
-  }
-
-  render() {
-    const { contacts, filter } = this.state;
-    return (
-      <div className={s.contactsBook}>
-        <Section title="Phonebook">
-          <Form onSubmit={this.formSubmitHandler} />
-        </Section>
-        <Section title="Contacts">
-          <Contacts
-            contacts={contacts}
-            filteredContacts={this.getFilteredContacts}
-            onDelete={this.removeContact}
-          >
-            <Filter input={filter} onChange={this.handleChange} />
-          </Contacts>
-        </Section>
-      </div>
-    );
-  }
+  return (
+    <div className={s.contactsBook}>
+      <Section title="Phonebook">
+        <Form onSubmit={formSubmitHandler} />
+      </Section>
+      <Section title="Contacts">
+        <Contacts
+          filteredContacts={getFilteredContacts}
+          onDelete={removeContact}
+        >
+          <Filter input={filter} onChange={handleChange} />
+        </Contacts>
+      </Section>
+    </div>
+  );
 }
 
 export default App;
