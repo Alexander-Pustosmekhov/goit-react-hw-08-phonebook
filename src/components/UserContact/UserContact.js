@@ -1,7 +1,9 @@
 import s from './UserContact.module.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import deleteContact from '../../redux/actions';
+import actions from '../../redux/actions';
+
+const { deleteContact } = actions;
 
 function UserContact({ id, name, number, onDelete }) {
   return (
