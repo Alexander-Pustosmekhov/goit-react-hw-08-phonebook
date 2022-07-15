@@ -20,4 +20,5 @@ const filterContact = name => ({
   payload: name,
 });
 
-export default { addContact, deleteContact, filterContact };
+const actionsContact = { addContact, deleteContact, filterContact };
+export default actionsContact;

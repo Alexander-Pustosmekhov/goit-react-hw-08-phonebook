@@ -1,10 +1,8 @@
 import UserContact from 'components/UserContact/UserContact';
 import s from './Contacts.module.css';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 function Contacts({ children, contacts, filter }) {
-  console.log(contacts);
   const getFilteredContacts = () => {
     const filteredContacts = [];
     contacts.forEach(e => {

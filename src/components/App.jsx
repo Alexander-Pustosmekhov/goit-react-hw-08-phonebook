@@ -1,10 +1,8 @@
-import { nanoid } from 'nanoid';
 import Form from './Form/Form';
 import Section from './Section/Section';
 import Contacts from './Contacts/Contacts';
 import Filter from './Filter/Filter';
 import s from './App.module.css';
-import { useState, useEffect, useRef } from 'react';
 
 function App() {
   // const [contacts, setContacts] = useState([]);
