@@ -1,5 +1,7 @@
 import s from './UserContact.module.css';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import deleteContact from '../../redux/actions';
 
 function UserContact({ id, name, number, onDelete }) {
   return (
@@ -22,7 +24,10 @@ UserContact.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
 };
 
-export default UserContact;
+const mapDispatchToProps = dispatch => ({
+  onDelete: id => dispatch(deleteContact(id)),
+});
+
+export default connect(null, mapDispatchToProps)(UserContact);

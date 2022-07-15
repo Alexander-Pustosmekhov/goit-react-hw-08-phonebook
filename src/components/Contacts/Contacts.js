@@ -1,9 +1,22 @@
 import UserContact from 'components/UserContact/UserContact';
 import s from './Contacts.module.css';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-function Contacts({ children, filteredContacts, onDelete }) {
-  const filteredContactsArray = filteredContacts();
+function Contacts({ children, contacts, filter }) {
+  console.log(contacts);
+  const getFilteredContacts = () => {
+    const filteredContacts = [];
+    contacts.forEach(e => {
+      if (e.name.toLowerCase().includes(filter.toLowerCase())) {
+        filteredContacts.push(e);
+      }
+    });
+    return filteredContacts;
+  };
+
+  const filteredContactsArray = getFilteredContacts();
+
   return (
     <div className={s.contacts}>
       {children}
@@ -16,7 +29,6 @@ function Contacts({ children, filteredContacts, onDelete }) {
                 id={e.id}
                 name={e.name}
                 number={e.number}
-                onDelete={onDelete}
               />
             );
           })}
@@ -28,10 +40,15 @@ function Contacts({ children, filteredContacts, onDelete }) {
   );
 }
 
-Contacts.propTypes = {
-  children: PropTypes.node.isRequired,
-  filteredContacts: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-};
+// Contacts.propTypes = {
+//   children: PropTypes.node.isRequired,
+//   filteredContacts: PropTypes.func.isRequired,
+//   onDelete: PropTypes.func.isRequired,
+// };
 
-export default Contacts;
+const mapStateToProps = state => ({
+  contacts: state.contacts.items,
+  filter: state.contacts.filter,
+});
+
+export default connect(mapStateToProps)(Contacts);
