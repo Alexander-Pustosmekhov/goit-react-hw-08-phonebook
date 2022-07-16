@@ -1,8 +1,13 @@
 import UserContact from 'components/UserContact/UserContact';
 import s from './Contacts.module.css';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getContacts, getFilter } from 'redux/contacts-selector';
 
-function Contacts({ children, contacts, filter }) {
+export default function Contacts({ children }) {
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+
   const getFilteredContacts = () => {
     const filteredContacts = [];
     contacts.forEach(e => {
@@ -38,15 +43,6 @@ function Contacts({ children, contacts, filter }) {
   );
 }
 
-// Contacts.propTypes = {
-//   children: PropTypes.node.isRequired,
-//   filteredContacts: PropTypes.func.isRequired,
-//   onDelete: PropTypes.func.isRequired,
-// };
-
-const mapStateToProps = state => ({
-  contacts: state.contacts.items,
-  filter: state.contacts.filter,
-});
-
-export default connect(mapStateToProps)(Contacts);
+Contacts.propTypes = {
+  children: PropTypes.node.isRequired,
+};

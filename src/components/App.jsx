@@ -4,7 +4,7 @@ import Contacts from './Contacts/Contacts';
 import Filter from './Filter/Filter';
 import s from './App.module.css';
 
-function App() {
+export default function App() {
   return (
     <div className={s.contactsBook}>
       <Section title="Phonebook">
@@ -18,5 +18,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

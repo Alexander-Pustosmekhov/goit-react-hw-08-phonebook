@@ -1,12 +1,17 @@
 import s from './Form.module.css';
-// import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import actions from '../../redux/actions';
+import { getContacts } from 'redux/contacts-selector';
 
 const { addContact } = actions;
 
-function Form({ onSubmit, contacts }) {
+export default function Form() {
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+
+  const onSubmit = (name, number) => dispatch(addContact(name, number));
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -72,15 +77,3 @@ function Form({ onSubmit, contacts }) {
     </form>
   );
 }
-
-// Form.propTypes = { onSubmit: PropTypes.func.isRequired };
-
-const mapStateToProps = state => ({
-  contacts: state.contacts.items,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onSubmit: (name, number) => dispatch(addContact(name, number)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
