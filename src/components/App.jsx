@@ -3,8 +3,17 @@ import Section from './Section/Section';
 import Contacts from './Contacts/Contacts';
 import Filter from './Filter/Filter';
 import s from './App.module.css';
+import operations from 'redux/operations';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-export default function App() {
+const { fetchContacts } = operations;
+
+function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
   return (
     <div className={s.contactsBook}>
       <Section title="Phonebook">
@@ -18,3 +27,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;

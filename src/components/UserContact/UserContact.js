@@ -1,9 +1,9 @@
 import s from './UserContact.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import actions from '../../redux/actions';
+import operations from 'redux/operations';
 
-const { deleteContact } = actions;
+const { deleteContacts } = operations;
 
 export default function UserContact({ id, name, number }) {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export default function UserContact({ id, name, number }) {
         className={s.button}
         type="button"
         onClick={() => {
-          dispatch(deleteContact(id));
+          dispatch(deleteContacts(id));
         }}
       >
         Delete

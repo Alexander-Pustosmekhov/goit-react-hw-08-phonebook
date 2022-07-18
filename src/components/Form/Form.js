@@ -1,16 +1,18 @@
 import s from './Form.module.css';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import actions from '../../redux/actions';
+// import actions from '../../redux/actions';
 import { getContacts } from 'redux/contacts-selector';
+import operations from 'redux/operations';
 
-const { addContact } = actions;
+const { addContacts } = operations;
+// const { addContact } = actions;
 
 export default function Form() {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
-  const onSubmit = (name, number) => dispatch(addContact(name, number));
+  const onSubmit = (name, number) => dispatch(addContacts({ name, number }));
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
