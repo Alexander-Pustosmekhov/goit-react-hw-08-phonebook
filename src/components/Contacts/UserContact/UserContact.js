@@ -1,7 +1,7 @@
 import s from './UserContact.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import operations from 'redux/operations';
+import operations from 'redux/contacts/contacts-operations';
 
 const { deleteContacts } = operations;
 

@@ -1,8 +1,8 @@
-import UserContact from 'components/UserContact/UserContact';
-import s from './Contacts.module.css';
+import UserContact from 'components/Contacts/UserContact/UserContact';
+import s from './ContactList.module.css';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getContacts, getFilter } from 'redux/contacts-selector';
+import { getContacts, getFilter } from 'redux/contacts/contacts-selector';
 
 export default function Contacts({ children }) {
   const contacts = useSelector(getContacts);

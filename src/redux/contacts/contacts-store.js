@@ -1,4 +1,4 @@
-import contactsReducer from './reducers';
+import contactsReducer from './contacts-reducers';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 

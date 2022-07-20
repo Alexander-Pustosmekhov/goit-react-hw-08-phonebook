@@ -2,8 +2,8 @@ import s from './Form.module.css';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import actions from '../../redux/actions';
-import { getContacts } from 'redux/contacts-selector';
-import operations from 'redux/operations';
+import { getContacts } from 'redux/contacts/contacts-selector';
+import operations from 'redux/contacts/contacts-operations';
 
 const { addContacts } = operations;
 // const { addContact } = actions;
