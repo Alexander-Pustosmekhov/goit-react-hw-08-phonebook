@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import userRegistration from 'redux/users/users-operations';
+import userOperations from 'redux/users/users-operations';
+
+const { userRegistration } = userOperations;
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -30,6 +32,9 @@ export default function Register() {
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(userRegistration({ name, email, password }));
+    setName('');
+    setEmail('');
+    setPassword('');
   };
 
   return (

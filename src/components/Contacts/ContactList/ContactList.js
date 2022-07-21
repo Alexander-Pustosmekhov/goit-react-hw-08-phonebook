@@ -31,7 +31,7 @@ export default function Contacts({ children }) {
                 key={e.id}
                 id={e.id}
                 name={e.name}
-                number={e.phone}
+                number={e.number}
               />
             );
           })}

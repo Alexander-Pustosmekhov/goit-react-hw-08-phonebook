@@ -3,21 +3,24 @@ import Section from './Contacts/Section/Section';
 import ContactList from './Contacts/ContactList/ContactList';
 import Filter from './Contacts/Filter/Filter';
 import s from './App.module.css';
-// import operations from 'redux/contacts/contacts-operations';
-// import { useEffect } from 'react';
-// import { useDispatch } frgitom 'react-redux';
+import userOperations from 'redux/users/users-operations';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Login from './Login/Login';
 import Register from './Register/Register';
 import Header from './Header/Header';
 import { Route, Routes } from 'react-router-dom';
+import contactsOperations from 'redux/contacts/contacts-operations';
 
-// const { fetchContacts } = operations;
+const { fetchCurrentUser } = userOperations;
+const { fetchContacts } = contactsOperations;
 
 function App() {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchContacts());
-  // }, [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
+    dispatch(fetchContacts());
+  }, [dispatch]);
   return (
     <>
       <Header></Header>
