@@ -10,7 +10,7 @@ export default function Filter() {
   const onChange = e => dispatch(filterContact(e.currentTarget.value));
 
   return (
-    <div>
+    <div className={s.filter}>
       <p className={s.text}>Find contacts by name</p>
       <input
         type="text"

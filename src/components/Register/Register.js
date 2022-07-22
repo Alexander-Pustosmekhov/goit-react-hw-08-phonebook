@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import userOperations from 'redux/users/users-operations';
+import s from './Register.module.css';
 
 const { userRegistration } = userOperations;
 
@@ -42,9 +43,9 @@ export default function Register() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name
+      <form onSubmit={handleSubmit} className={s.form}>
+        <label className={s.label}>
+          <span className={s.inputName}>Name</span>
           <input
             name="name"
             onChange={onChange}
@@ -53,8 +54,8 @@ export default function Register() {
             required
           />
         </label>
-        <label>
-          Email
+        <label className={s.label}>
+          <span className={s.inputName}>Email</span>
           <input
             name="email"
             onChange={onChange}
@@ -63,8 +64,8 @@ export default function Register() {
             required
           />
         </label>
-        <label>
-          Password
+        <label className={s.label}>
+          <span className={s.inputName}>Password</span>
           <input
             name="password"
             onChange={onChange}
@@ -73,7 +74,9 @@ export default function Register() {
             required
           />
         </label>
-        <button type="submit"></button>
+        <button type="submit" className={s.button}>
+          Registration
+        </button>
       </form>
     </>
   );

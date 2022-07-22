@@ -3,11 +3,12 @@ import s from './Navigator.module.css';
 import { NavLink } from 'react-router-dom';
 
 const StyledLink = styled(NavLink)`
-  color: black;
-  background-color: beige;
+  color: #ffffff;
+  background-color: teal;
+  border: 1px solid #ffffff;
   &.active {
-    color: orange;
-    background-color: rgb(175, 3, 147);
+    color: black;
+    background-color: #ffffff;
   }
 `;
 

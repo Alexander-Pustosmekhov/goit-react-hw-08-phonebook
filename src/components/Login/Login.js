@@ -1,4 +1,4 @@
-// import s from './Login.module.css';
+import s from './Login.module.css';
 import userOperations from 'redux/users/users-operations';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -37,10 +37,11 @@ export default function Login() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label>
+      <form onSubmit={handleSubmit} className={s.form}>
+        <label className={s.label}>
           Email
           <input
+            className={s.inputName}
             type="mail"
             required
             value={email}
@@ -48,9 +49,10 @@ export default function Login() {
             name="email"
           />
         </label>
-        <label>
+        <label className={s.label}>
           Password
           <input
+            className={s.inputName}
             type="password"
             required
             value={password}
@@ -58,7 +60,9 @@ export default function Login() {
             name="password"
           />
         </label>
-        <button type="submit"></button>
+        <button type="submit" className={s.button}>
+          Log in
+        </button>
       </form>
     </>
   );

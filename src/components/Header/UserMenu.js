@@ -9,10 +9,6 @@ export default function Navigator() {
   const userName = useSelector(getName);
   const dispatch = useDispatch();
 
-  console.log('====================================');
-  console.log(userName);
-  console.log('====================================');
-
   const handleClick = () => {
     dispatch(userLogout());
   };
