@@ -1,10 +1,12 @@
-import UserContact from 'components/Contacts/UserContact/UserContact';
+import UserContact from '../UserContact/UserContact';
 import s from './ContactList.module.css';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { getContacts, getFilter } from 'redux/contacts/contacts-selector';
+import {
+  getContacts,
+  getFilter,
+} from '../../../redux/contacts/contacts-selector';
 
-export default function Contacts({ children }) {
+export default function ContactList() {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
 
@@ -19,10 +21,11 @@ export default function Contacts({ children }) {
   };
 
   const filteredContactsArray = getFilteredContacts();
+  console.log(contacts);
+  console.log(filter);
 
   return (
     <div className={s.contacts}>
-      {children}
       {filteredContactsArray.length ? (
         <ul className={s.list}>
           {filteredContactsArray.map(e => {
@@ -42,7 +45,3 @@ export default function Contacts({ children }) {
     </div>
   );
 }
-
-Contacts.propTypes = {
-  children: PropTypes.node.isRequired,
-};

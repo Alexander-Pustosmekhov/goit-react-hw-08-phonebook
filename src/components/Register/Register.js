@@ -29,12 +29,15 @@ export default function Register() {
     }
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch(userRegistration({ name, email, password }));
+  const reset = () => {
     setName('');
     setEmail('');
     setPassword('');
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(userRegistration({ name, email, password, reset }));
   };
 
   return (

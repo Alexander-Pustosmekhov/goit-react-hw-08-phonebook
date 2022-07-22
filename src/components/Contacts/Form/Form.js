@@ -1,12 +1,12 @@
 import s from './Form.module.css';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import actions from '../../redux/actions';
 import { getContacts } from 'redux/contacts/contacts-selector';
 import operations from 'redux/contacts/contacts-operations';
+import actionsContact from 'redux/contacts/contacts-actions';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const { addContacts } = operations;
-// const { addContact } = actions;
 
 export default function Form() {
   const contacts = useSelector(getContacts);
@@ -34,8 +34,9 @@ export default function Form() {
 
   const handleSubmit = e => {
     e.preventDefault();
+    dispatch(actionsContact.reset());
     if (contacts.some(e => e.name === name)) {
-      alert(`${name} is already in contacts.`);
+      Notify.warning(`${name} is already in contacts.`);
       return;
     }
     onSubmit(name, number);

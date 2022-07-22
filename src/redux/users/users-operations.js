@@ -1,33 +1,36 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { token } from 'redux/axios';
-
-// axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const userRegistration = createAsyncThunk(
   'users/userRegistration',
-  async ({ name, email, password }, { rejectWithValue }) => {
+  async ({ name, email, password, reset }, { rejectWithValue }) => {
     try {
       const user = { name, email, password };
       const result = await axios.post('/users/signup', user);
       token.set(result.data.token);
+      reset();
       return result.data;
     } catch (error) {
-      return rejectWithValue(error);
+      Notify.failure(error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
 
 const userLogin = createAsyncThunk(
   'users/userLogin',
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, password, reset }, { rejectWithValue }) => {
     try {
       const user = { email, password };
       const result = await axios.post('/users/login', user);
       token.set(result.data.token);
+      reset();
       return result.data;
     } catch (error) {
-      return rejectWithValue(error);
+      Notify.failure(error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -39,7 +42,8 @@ const userLogout = createAsyncThunk(
       await axios.post('users/logout');
       token.unset();
     } catch (error) {
-      rejectWithValue(error);
+      Notify.failure(error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -58,7 +62,10 @@ const fetchCurrentUser = createAsyncThunk(
     try {
       const { data } = await axios.get('/users/current');
       return data;
-    } catch (error) {}
+    } catch (error) {
+      Notify.failure(error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
 );
 

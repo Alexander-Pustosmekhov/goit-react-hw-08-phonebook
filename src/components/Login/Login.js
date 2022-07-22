@@ -25,11 +25,14 @@ export default function Login() {
     }
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch(userLogin({ email, password }));
+  const reset = () => {
     setEmail('');
     setPassword('');
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(userLogin({ email, password, reset }));
   };
 
   return (

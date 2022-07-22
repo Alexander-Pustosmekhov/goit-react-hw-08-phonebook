@@ -1,45 +1,77 @@
-import Form from './Contacts/Form/Form';
-import Section from './Contacts/Section/Section';
-import ContactList from './Contacts/ContactList/ContactList';
-import Filter from './Contacts/Filter/Filter';
-import s from './App.module.css';
 import userOperations from 'redux/users/users-operations';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { lazy, Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Login from './Login/Login';
 import Register from './Register/Register';
 import Header from './Header/Header';
 import { Route, Routes } from 'react-router-dom';
-import contactsOperations from 'redux/contacts/contacts-operations';
+import Contacts from './Contacts/Contacts';
+import PrivateRoute from './Route/PrivateRoute';
+import PublicRoute from './Route/PublicRoute';
+import { getIsFetchingCurrent } from 'redux/users/users.selector';
+
+// const Login = lazy(() => {
+//   import('./Login/Login' /* webpackChunkName: "Login" */);
+// });
+
+// const Register = lazy(() => {
+//   import('./Register/Register' /* webpackChunkName: "Register" */);
+// });
+
+// const Header = lazy(() => {
+//   import('./Header/Header' /* webpackChunkName: "Header" */);
+// });
+
+// const Contacts = lazy(() => {
+//   import('./Contacts/Contacts' /* webpackChunkName: "Contacts" */);
+// });
 
 const { fetchCurrentUser } = userOperations;
-const { fetchContacts } = contactsOperations;
 
 function App() {
+  const isFetching = useSelector(getIsFetchingCurrent);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchCurrentUser());
-    dispatch(fetchContacts());
   }, [dispatch]);
   return (
     <>
-      <Header></Header>
+      {/* <Suspense fallback={<div>Loading...</div>}> */}
       <Routes>
         <Route path="/" element={<Header />}>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          {!isFetching && (
+            <>
+              <Route
+                path="login"
+                element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="register"
+                element={
+                  <PublicRoute>
+                    <Register />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="contacts"
+                element={
+                  <PrivateRoute>
+                    <Contacts />
+                  </PrivateRoute>
+                }
+              />
+            </>
+          )}
         </Route>
+        {!isFetching && <Route path="*" element={<p>Page not found</p>} />}
       </Routes>
-      <div className={s.contactsBook}>
-        <Section title="Phonebook">
-          <Form />
-        </Section>
-        <Section title="Contacts">
-          <ContactList>
-            <Filter />
-          </ContactList>
-        </Section>
-      </div>
+      {/* </Suspense> */}
     </>
   );
 }

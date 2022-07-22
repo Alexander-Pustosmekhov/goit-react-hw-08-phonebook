@@ -27,11 +27,12 @@ const loading = createReducer(false, {
 
 const error = createReducer(null, {
   [operations.fetchContacts.pending]: () => false,
-  [operations.fetchContacts.rejected]: () => true,
+  [operations.fetchContacts.rejected]: (_, { payload }) => payload,
   [operations.deleteContacts.pending]: () => false,
   [operations.deleteContacts.rejected]: (_, { payload }) => payload,
   [operations.addContacts.pending]: () => false,
-  [operations.addContacts.rejected]: () => true,
+  [operations.addContacts.rejected]: (_, { payload }) => payload,
+  [actions.reset]: () => false,
 });
 
 const filter = createReducer('', {
